@@ -1,0 +1,21 @@
+   - name: installation JDK
+     package: name=openjdk-8-jdk state=present
+ 
+   - name: installation maven
+     package: name=maven state=present
+
+   - name: installation Git
+     package: name=git state=present
+
+   - name: création compte utilisateur deploy
+     user:
+      name: deploy
+      shell: /home/deploy
+      groups: admins
+
+   - git:
+        repo: https://github.com/spoonless/mvc.git
+        dest: /home/deploy/mvc
+
+   - name: Lancer Maven
+     command: cd /home/deploy/mvc | mvn wildfly:deploy
